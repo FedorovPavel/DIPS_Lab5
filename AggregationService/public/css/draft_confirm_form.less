@@ -1,0 +1,61 @@
+@main-color         : #0288d1;
+@sub-color          : #005b9f;
+@light-text         : #ffffff;
+@dark-text          : #353535;
+@button-color       : #3366FF;
+@button-color-hover : #6699FF;
+
+div.draft_form{
+    position: fixed;
+    left:0%;
+    top:0%;
+    right: 0%;
+    bottom: 0%;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+    div.panel{
+        position: absolute;
+        left: 10%;
+        top: 10%;
+        right: 10%;
+        bottom: 10%;
+        background: @light-text;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+        border: 1px solid @sub-color;
+        border-radius: 5px;
+        span.dateErr{
+            color: #e24304;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        button.btn_close{
+            outline: none;
+        }   
+        span{
+            font-size: 15px;
+        }
+        span.head_label{
+            font-size: 18px;
+            font-weight: 700;
+        } 
+        div.button_field{
+            margin-top: 20px;
+            button.btn{
+                background: @main-color;
+                color:@light-text;
+                font-size: 18px;
+                font-weight: 700;
+            }
+        }
+        div.confirm_field{
+            margin-top: 20px;
+            button.btn{
+                background: #07a807;
+                color:@light-text;
+                font-size: 18px;
+                font-weight: 700;
+            }
+        }
+        padding: 20px;
+    }
+}

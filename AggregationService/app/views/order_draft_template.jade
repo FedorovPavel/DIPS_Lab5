@@ -1,0 +1,68 @@
+.draft_form#draft_panel
+    .panel.container-fluid
+        .row
+            .col-sm-2.col-sm-offset-10.text-right
+                button.btn.btn_close.glyphicon.glyphicon-remove
+            .col-sm-12.header.text-center
+                h2.title 
+            .col-sm-12.car_desc
+                .row 
+                    .col-md-12.text-center
+                        h3.pre_title Автомобиль
+                    .col-md-12
+                        .row
+                            .col-sm-3.col-md-offset-3
+                                span.head_label Производитель
+                            .col-sm-3
+                                span.manufacture
+                    .col-md-12
+                        .row
+                            .col-sm-3.col-md-offset-3
+                                span.head_label Модель
+                            .col-sm-3
+                                span.model
+                    .col-md-12
+                        .row
+                            .col-sm-3.col-md-offset-3
+                                span.head_label Тип
+                            .col-sm-3
+                                span.type
+                    .col-md-12
+                        .row
+                            .col-sm-3.col-md-offset-3
+                                span.head_label Стоимость 
+                            .col-sm-3
+                                span.cost
+            .col-sm-12.content
+                .row
+                    form#draft_order
+                        .col-sm-1.col-sm-offset-2.text-right
+                            span.head_label C
+                        .col-sm-2.text-left
+                            input#startDate.calendar(name='startDate',type='date', required)
+                        .col-sm-1.text-right
+                            span.head_label По
+                        .col-sm-2.text-left
+                            input#endDate.calendar(name='endDate', type='date', required)
+                        .col-sm-12
+                            span.dataErr
+            .col-sm-12.button_field
+                .row
+                    .col-sm-2.col-sm-offset-5
+                        button.btn.btn_submit Далее
+            .col-sm-12.order_desc.hidden
+                .row
+                    .col-sm-12.data
+                        .row
+                            .col-sm-1.col-sm-offset-1.text-right
+                                span.head_label C
+                            .col-sm-2.text-left
+                                span.start_date
+                            .col-sm-1.col-sm-offset-1.text-right
+                                span.head_label По
+                            .col-sm-2.text-left
+                                span.end_date
+                    .col-sm-12.button_confirm_field
+                        .row
+                            .col-sm-2.col-sm-offset-5
+                                button.btn.btn_confirm Подтвердить

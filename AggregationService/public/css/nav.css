@@ -1,0 +1,37 @@
+div.navbar-wrapper {
+  background: #0288d1;
+  height: 60px;
+}
+div.navbar-wrapper div.logo img {
+  height: 60px;
+}
+div.navbar-wrapper div.name {
+  vertical-align: middle;
+  height: 60px;
+}
+div.navbar-wrapper div.name p {
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  font-style: italic;
+  text-decoration: underline;
+  color: #ffffff;
+}
+div.navbar-wrapper ul.nav {
+  margin: 7px 0px 0px 30px;
+}
+div.navbar-wrapper ul.nav li a {
+  font-size: 18px;
+  color: #ffffff;
+  background: #6699FF;
+}
+div.navbar-wrapper ul.nav li:hover a {
+  font-size: 18px;
+  color: #ffffff;
+  background: #527eff;
+}
+div.navbar-wrapper ul.nav li.active a {
+  font-size: 18px;
+  color: #353535;
+  background: #eeeeee;
+}

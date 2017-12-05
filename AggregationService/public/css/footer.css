@@ -1,0 +1,19 @@
+div.footer {
+  background: #0288d1;
+  width: 100%;
+  padding: 20px;
+}
+div.footer span.project {
+  margin-left: 30px;
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 600;
+  font-style: italic;
+}
+div.footer span.author {
+  margin-right: 30px;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 600;
+  font-style: italic;
+}

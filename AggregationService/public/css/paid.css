@@ -1,0 +1,23 @@
+.paid_form {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+}
+.paid_form .panel {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  top: 15%;
+  bottom: 15%;
+  background: #ffffff;
+}
+.paid_form .panel span {
+  font-size: 15px;
+}
+.paid_form .panel span.head_label {
+  font-size: 18px;
+  font-weight: 700;
+}

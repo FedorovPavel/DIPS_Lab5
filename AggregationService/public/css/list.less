@@ -1,0 +1,34 @@
+@counter_color : #337ab7;
+
+div.content-field{
+    min-height: calc(~'100vh - 60px - 88px');
+    overflow: hidden;
+    .row{
+        min-height: inherit;
+        div.content-row{
+            min-height: inherit;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            div.list{
+                padding: 10px;
+            }
+            select.count_selector{
+                font-size: 14px;
+                color : @counter_color;
+                border: 1px solid #cccccc;
+                border-radius: 15px;
+                padding: 5px;
+                margin-top: 20px;
+                outline: none;
+                cursor: pointer;
+            }   
+            ul.pager{
+                li{
+                    a{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,35 @@
+.paid_form#paid_panel
+    .panel.container-fluid
+        .row
+            .col-sm-2.col-sm-offset-10.text-right
+                button.btn.btn_close.glyphicon.glyphicon-remove
+            .col-sm-12.header.text-center
+                h2.title Оформеление платежа
+            .col-sm-12
+                .row
+                    .col-sm-2.col-sm-offset-2
+                        span.head_label Система платежа
+                    .col-sm-6
+                        select#paySystem
+                            option(value='Сбербанк' selected) Сбербанк
+                            option(value='Открытие') Открытие
+                            option(value='Возрождение') Возрождение
+                            option(value='RocketBank') RocketBank
+                            option(value='Raiffeisen') Raiffeisen
+                            option(value='Альфа-банк') Альфа-банк
+            .col-sm-12  
+                .row
+                    .col-sm-2.col-sm-offset-2
+                        span.head_label Расчетный счет
+                    .col-sm-6
+                        input#account
+            .col-sm-12
+                .row
+                    .col-sm-2.col-sm-offset-2
+                        span.head_label Стоимость
+                    .col-sm-6
+                        input#cost(value=10, min=10, type='number')
+            .col-sm-12
+                span.errStatus
+            .col-sm-12
+                button.btn.btn_submit Оплатить

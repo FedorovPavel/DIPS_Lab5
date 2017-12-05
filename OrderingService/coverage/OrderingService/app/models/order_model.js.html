@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for OrderingService/app/models/order_model.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\index.html">All files</a> / <a href="index.html">OrderingService/app/models</a> order_model.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.75% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>103/126</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">72.84% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>59/81</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">95.24% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>20/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.75% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>103/126</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose  = require('mongoose'),
+      Schema    = mongoose.Schema;
+&nbsp;
+const OrderSchema = new Schema({
+  UserID      : Schema.Types.ObjectId,
+  CarID       : Schema.Types.ObjectId,
+  BillingID   : Schema.Types.ObjectId,
+  Lease       : {
+    StartDate : Date,
+    EndDate   : Date
+  },
+  DateOfIssue : Date,
+  Status      : String
+});
+&nbsp;
+OrderSchema.virtual('date')
+  .get(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this._id.getTimestamp())</span>;
+&nbsp;
+OrderSchema.statics.getOrders = function(user_id, page, count, callback){
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (user_id.length  == 0  || !user_id || typeof(user_id)  == 'undefined' ||
+      page &lt; 0  || typeof(page)     == 'undefined' ||
+      count &lt;= 0  || typeof(count)    == 'undefined'){
+<span class="cstat-no" title="statement not covered" >      return callback('user ID is undefined', null);</span>
+  } else {
+    return this.find({'UserID' : user_id}, function(err, orders){
+      if (err)
+        return callback(err, null);
+      else {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (orders) {
+          let result = [];
+          for (let I = 0; I &lt; orders.length; I++){
+            let item = getOrder(orders[I]);
+            result[I] = item;
+          }
+          return callback(null, result);
+        } else {
+<span class="cstat-no" title="statement not covered" >          return callback(null, null);</span>
+        }
+      }
+    }).skip(page*count).limit(count); 
+  }
+};
+&nbsp;
+OrderSchema.statics.getOrder = function(id, callback){
+  return this.findById(id, function(err, result){
+    if (err)
+      return callback(err, null);
+    else {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (result) {
+        let order = getOrder(result);
+        return callback(null, order);
+      } else {
+<span class="cstat-no" title="statement not covered" >        return callback(null, null);</span>
+      }
+    }
+  });  
+};
+&nbsp;
+OrderSchema.statics.createOrder = function(objectInfo, callback){
+  let object = Object(objectInfo);
+  const check = checkRequiredFields(Object.keys(object));
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (check){
+    let order = createOrder(object);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (order){
+      return order.save(function(err, result){
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
+<span class="cstat-no" title="statement not covered" >          return callback(err, null);</span>
+        else {
+          let res = getOrder(result);
+          return callback(null, res);
+        }
+      });
+    } else {
+<span class="cstat-no" title="statement not covered" >      return callback('Unknown fields', null);</span>
+    }
+  } else {
+<span class="cstat-no" title="statement not covered" >    return callback('not found required fields', null);</span>
+  }
+}
+&nbsp;
+OrderSchema.statics.setWaitStatus = function(id, callback){
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!id || id.length == 0 || typeof(id) == 'undefined'){
+<span class="cstat-no" title="statement not covered" >    return callback('ID is undefined', null);</span>
+  } else {
+    return this.findById(id, function(err, order){
+      if (err)
+        return callback(err, null);
+      else {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (order){
+          if (order.Status == 'Draft'){
+            order.Status = 'WaitForBilling';
+            order.save(function(err, res){
+              <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
+<span class="cstat-no" title="statement not covered" >                return callback(err, null);</span>
+              else 
+                callback(null, res);
+            });
+          } else {
+            return callback("Status don't right", null);
+          }
+        } else { 
+<span class="cstat-no" title="statement not covered" >          return callback(null, null);</span>
+        }
+      }
+    });
+  }
+};
+&nbsp;
+OrderSchema.statics.setPaidStatus = function(id, callback){
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!id || id.length == 0 || typeof(id) == 'undefined'){
+<span class="cstat-no" title="statement not covered" >    return callback('ID is undefined', null);</span>
+  } else {
+    return this.findById(id, function(err, order){
+      if (err)
+        return callback(err, null);
+      else {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (order){
+          if (order.Status == 'WaitForBilling'){
+            order.Status = 'Paid';
+            order.save(function(err, res){
+              <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
+<span class="cstat-no" title="statement not covered" >                return callback(err, null);</span>
+              else 
+                callback(null, res);
+            });
+          } else {
+            return callback("Status don't right", null);
+          }
+        } else { 
+<span class="cstat-no" title="statement not covered" >          return callback(null, null);</span>
+        }
+      }
+    });
+  }
+};
+&nbsp;
+OrderSchema.statics.setCompletedStatus = function(id, callback){
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!id || id.length == 0 || typeof(id) == 'undefined'){
+<span class="cstat-no" title="statement not covered" >    return callback('ID is undefined', null);</span>
+  } else {
+    return this.findById(id, function(err, order){
+      if (err)
+        return callback(err, null);
+      else {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (order){
+          if (order.Status == 'Paid'){
+            order.Status = 'Completed';
+            order.save(function(err, res){
+              <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
+<span class="cstat-no" title="statement not covered" >                return callback(err, null);</span>
+              else 
+                callback(null, res);
+            });
+          } else {
+            return callback("Status don't right", null);
+          }
+        } else { 
+<span class="cstat-no" title="statement not covered" >          return callback(null, null);</span>
+        }
+      }
+    });
+  }
+};
+&nbsp;
+OrderSchema.statics.attachBilling = function(order_id, billing_id, callback){
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (order_id &amp;&amp; billing_id){
+    return this.findByIdAndUpdate(order_id,{$set:{BillingID:billing_id}}, function(err, result){
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err)
+<span class="cstat-no" title="statement not covered" >        return callback(err, null);</span>
+      else {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (result){
+          const res = getOrder(result);
+          return callback(null, res);
+        } else {
+<span class="cstat-no" title="statement not covered" >          return callback(null, null);</span>
+        }
+      }
+    })
+  } else {
+<span class="cstat-no" title="statement not covered" >    return callback('Bad params', null);</span>
+  }
+}
+&nbsp;
+function createOrder(object){
+  const model = mongoose.model('Order');
+  let item = new model();
+  let errorParse = false;
+  for (key in object){
+    switch (key) {
+      case 'UserID' :
+        item.UserID = mongoose.Types.ObjectId(object[key]);
+        break;
+      case 'CarID'  :
+        item.CarID  = mongoose.Types.ObjectId(object[key]);
+        break;
+      case 'StartDate' :
+        item.Lease.StartDate = new Date(object[key]);
+        break;
+      case 'EndDate' :
+        item.Lease.EndDate = new Date(object[key]);
+        break;
+<span class="branch-4 cbranch-no" title="branch not covered" >      default :</span>
+<span class="cstat-no" title="statement not covered" >        errorParse = true;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (errorParse)
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  item.DateOfIssue = Date.now();
+  item.Status = 'Draft';
+  return item;
+}
+&nbsp;
+function getOrder(record){
+  let item = {
+    ID          : record._id,
+    UserID      : record.UserID,
+    CarID       : record.CarID,
+    BillingID   : record.BillingID,
+    Lease       : {
+      StartDate : record.Lease.StartDate,
+      EndDate   : record.Lease.EndDate
+    },
+    DateOfIssue : record.DateOfIssue,
+    Status      : record.Status
+  };
+  return item;
+}
+&nbsp;
+function checkRequiredFields(objectKeys){
+  const keys = Array.from(objectKeys);
+  const requiredField = ['UserID','CarID', 'StartDate', 'EndDate'];
+  let flag = 0;
+  for(let I = 0; I &lt; keys.length; I++ ){
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (requiredField.indexOf(keys[I]) != -1)
+      flag++;
+  }
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (flag == requiredField.length) {
+    return true;
+  } else {
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+}
+&nbsp;
+mongoose.model('Order', OrderSchema);</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Nov 08 2017 16:01:23 GMT+0300 (RTZ 2 (зима))
+</div>
+</div>
+<script src="..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\sorter.js"></script>
+</body>
+</html>

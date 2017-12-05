@@ -1,0 +1,73 @@
+div.order_container {
+  border: 1px solid #0288d1;
+  border-radius: 5px;
+  margin: 10px;
+}
+div.order_container div.record_header {
+  background: #0288d1;
+  cursor: pointer;
+}
+div.order_container div.record_header .align-right {
+  text-align: right;
+}
+div.order_container div.record_header .vert-align-m {
+  vertical-align: middle;
+}
+div.order_container div.record_header h4.title {
+  color: #ffffff;
+}
+div.order_container div.record_header div.view_detail_info {
+  background: inherit;
+  outline: none;
+  margin: 10px;
+}
+div.order_container div.record_header:hover {
+  background: #005b9f;
+}
+div.order_container div.main_info {
+  margin-top: 10px;
+}
+div.order_container div.main_info .date_issue_container {
+  margin-top: 27px;
+}
+div.order_container div.main_info span {
+  font-size: 15px;
+}
+div.order_container div.main_info span.head_label {
+  font-size: 18px;
+  font-weight: 700;
+}
+div.order_container div.billing_info span {
+  font-size: 15px;
+}
+div.order_container div.billing_info span.head_label {
+  font-size: 18px;
+  font-weight: 700;
+}
+div.order_container div.billing_info button.create_order {
+  margin: 20px 0px 10px 0px;
+  font-size: 20px;
+  background: #3366FF;
+  color: #ffffff;
+}
+div.order_container div.billing_info button.create_order:hover {
+  background: #6699FF;
+  color: #353535;
+}
+div.order_container div.car_info span {
+  font-size: 15px;
+}
+div.order_container div.car_info span.head_label {
+  font-size: 18px;
+  font-weight: 700;
+}
+div.order_container div.car_info button.create_order {
+  margin: 20px 0px 10px 0px;
+  font-size: 20px;
+  background: #3366FF;
+  color: #ffffff;
+}
+div.order_container div.car_info button.create_order:hover {
+  background: #6699FF;
+  color: #353535;
+}

@@ -1,0 +1,23 @@
+include layout
+
+include nav
+       
+block list
+  .container-fluid.content-field
+    .row
+      .col-md-8.col-md-offset-2.content-row
+        div#list.list 
+        .row
+          .col-xs-10
+            ul#pager.pager
+              li.previous
+                a &larr; Предыдущая
+              li.next 
+                a Следующая &rarr;
+          .col-xs-2
+            .btn-group.select_container
+              select#count_record.count_selector
+                option#min_record(counts=10) 10 
+                option#md_record(selected,counts=20) 20
+                option#lg_record(counts=30) 30
+include footer

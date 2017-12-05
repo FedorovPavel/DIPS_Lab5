@@ -1,0 +1,55 @@
+@main-color         : #0288d1;
+@light-text         : #ffffff;
+@menu-field         : #6699FF;
+@menu-field-hover   : #527eff;
+@dark-text          : #353535;
+@menu-field-active  : #eeeeee;
+@screen-lg-min      : 1200px;
+@screen-md-min      : 992px;
+@screen-sm-min      : 768px;
+
+div.navbar-wrapper{
+    background: @main-color;
+    height: 60px;
+    div.logo{
+        img{
+            height: 60px;
+        }
+    }
+    div.name{
+        vertical-align: middle;
+        height: 60px;
+        p{
+            margin-top: 12px;
+            font-size:24px;
+            font-weight: 800;
+            font-style: italic;
+            text-decoration: underline;
+            color: @light-text;
+        }
+    }
+    ul.nav{
+        margin: 7px 0px 0px 30px;
+        li{
+            a{
+                font-size:18px;   
+                color: @light-text;
+                background: @menu-field;
+            }
+        }
+        li:hover{
+            a{
+                font-size:18px;   
+                color: @light-text;
+                background: @menu-field-hover;
+            }
+        }
+        li.active{
+            a{
+                font-size:18px;   
+                color: @dark-text;
+                background: @menu-field-active;
+            }
+        }
+    }
+}
