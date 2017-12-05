@@ -8,7 +8,7 @@ const config = {
     app: {
       name: 'authservice'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3001,
     db: 'mongodb://localhost/authservice-development'
   },
 
@@ -17,7 +17,7 @@ const config = {
     app: {
       name: 'authservice'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3001,
     db: 'mongodb://localhost/authservice-test'
   },
 
@@ -26,7 +26,7 @@ const config = {
     app: {
       name: 'authservice'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3001,
     db: 'mongodb://localhost/authservice-production'
   }
 };
