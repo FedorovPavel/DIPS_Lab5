@@ -9,6 +9,9 @@ const config = {
       name: 'authservice'
     },
     port: process.env.PORT || 3001,
+    security : {
+      tokenLife : 1800
+    },
     db: 'mongodb://localhost/authservice-development'
   },
 
