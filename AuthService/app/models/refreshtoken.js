@@ -1,7 +1,7 @@
 const mongoose  = require('mongoose');
 const Schema  = mongoose.Schema;
 
-var Token = new Schema({
+var RefreshToken = new Schema({
     userId: {
         type: String,
         required: true
@@ -9,10 +9,6 @@ var Token = new Schema({
     clientId: {
         type: String,
         required: true
-    },
-    tokenType : {
-        type : String,
-        required : true
     },
     token: {
         type: String,
@@ -22,7 +18,7 @@ var Token = new Schema({
     created: {
         type: Date,
         default: Date.now
-    }
+    },
 });
 
-mongoose.model('AccessToken', AccessToken);
+mongoose.model('RefreshToken', RefreshToken);
