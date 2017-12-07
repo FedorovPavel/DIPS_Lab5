@@ -1,25 +1,23 @@
-const   config      = require('./config'),
-        passport    = require('passport'),
-        basicStr    = require('passport-http').BasicStrategy,
-        cliPwdStr   = require('passport-oauth2-client-password').Strategy,
-        bearerStr   = require('passport-http-bearer').Strategy,
-        mongoose    = require('mongoose'),
-        UserModel   = mongoose.model('User'),
-        ClientModel = mongoose.model('Client'),
-        AcTokenMod  = mongoose.model('AccessToken'),
-        RefTokenMod = mongoose.model('RefreshToken');
+const   config          	= require('./config'),
+        passport       		= require('passport'),
+        basicStrategy   	= require('passport-http').BasicStrategy,
+        passwordStrategy 	= require('passport-oauth2-client-password').Strategy,
+        bearerStrategy  	= require('passport-http-bearer').Strategy,
+        UserModel   			= require('./../app/models/users').userModel,
+        ClientModel 			= require('./../app/models/client').clientModel,
+        AccessToken  			= require('./../app/models/accesstoken').tokenModel,
+        RefreshToken 			= require('./../app/models/refreshtoken').tokenModel;
 
-passport.use(new basicStr(
-    function(username, password, done){
-        console.log('use Basic strategy');
-        ClientModel.findOne({clientId : username}, function(err, client){
+passport.use(new basicStrategy(
+    function(appId, appSecret, done){
+        ClientModel.findOne({clientId : appId}, function(err, app_cli){
             if (err)
                 return done(err);
-            if (!client)
+            if (!app_cli)
                 return done(null, false);
-            if (client.clientSecret != password)
+            if (app_cli.clientSecret != appSecret)
                 return done(null, false);
-            return done(null, client);
+            return done(null, app_cli);
         });
     }
 ));
