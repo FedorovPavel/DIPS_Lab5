@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose'),
       passport = require('passport'),
-      libs = require('./../../config/passport'),
-      oauth2 = require('./../../config/token_controller');
+      libs = require('./../../config/passport-stategy'),
+      oauth2 = require('./../../config/oauth-event-handles');
 
 module.exports = (app) => {
   app.use('/', router);
@@ -17,10 +17,12 @@ router.get('/',passport.authenticate('bearer', {session : false}), function(req,
 
 router.post('/token', oauth2.token);
 
-router.get('/info', passport.authenticate('bearer', {session : false}), function(req, res){
+router.post('/refreshToken', oauth2.refreshToken);
+
+// router.get('/info', passport.authenticate('bearer', {session : false}), function(req, res){
+router.get('/info', passport.authenticate('bearer', {session : false}), function(req, res, next){
   res.json({
     user_id : req.user.userId,
-    name : req.user.username,
     scope: req.authInfo.scope
   });
 });
