@@ -6,10 +6,6 @@ var RefreshToken = new Schema({
         type: String,
         required: true
     },
-    clientId: {
-        type: String,
-        required: true
-    },
     token: {
         type: String,
         unique: true,
@@ -22,3 +18,7 @@ var RefreshToken = new Schema({
 });
 
 mongoose.model('RefreshToken', RefreshToken);
+
+var model = mongoose.model('RefreshToken');
+
+module.exports.tokenModel = model;

@@ -23,8 +23,6 @@ const UserSchema = new Schema({
   }
 });
 
-mongoose.model('User', UserSchema);
-
 UserSchema.methods.encryptPassword = function(password){
   return crypto.createHmac('sha1', this.salt).update(password).digest("hex");
 }
@@ -43,6 +41,8 @@ UserSchema.virtual('password')
 UserSchema.methods.checkPassword = function(password){
   return this.encryptPassword(password) === this.hashedPassword;
 }
+
+mongoose.model('User', UserSchema);
 
 var model = mongoose.model('User');
 

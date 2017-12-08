@@ -6,10 +6,6 @@ var AccessToken = new Schema({
         type: String,
         required: true
     },
-    clientId: {
-        type: String,
-        required: true
-    },
     token: {
         type: String,
         unique: true,
@@ -26,3 +22,7 @@ var AccessToken = new Schema({
 });
 
 mongoose.model('AccessToken', AccessToken);
+
+var model = mongoose.model('AccessToken');
+
+module.exports.tokenModel = model;
