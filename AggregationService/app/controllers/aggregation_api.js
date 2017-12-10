@@ -4,6 +4,7 @@ var express   = require('express'),
     validator = require('./../validator/validator'),
     amqp      = require('amqplib/callback_api'),
     render    = require('./render'),
+    auth      = require('basic-auth'),
     interval  = 20000;// 20s to repeate check live
     
 
@@ -67,6 +68,31 @@ setInterval(function(){
     }
   });
 }, interval);
+
+//  Auth
+router.post('/auth', function(req, res, next){
+  let type;
+  let user;
+  if (req.headers.authorization.indexOf('Basic') === 0){
+    user = auth(req);
+    return bus.getToken(user.name, user.pass, function(err, status, responseText){
+      if (err)
+        res.status(status).send(responseText);
+      else {
+        res.status(status).send(responseText);
+      }
+    });
+  } else if (req.headers.authorization.indexOf('Bearer') === 0) {
+    const ref_token = req.headers.authorization.split(' ')[1];
+    return bus.getToken(ref_token, function(err, status, responseText){
+      if (err)
+        res.status(status).send(responseText);
+      else {
+        res.status(status).send(responseText);
+      }
+    });
+  }
+});
 
 // Get any cars
 router.get('/catalog', function(req, res, next){
@@ -365,47 +391,49 @@ router.put('/orders/complete/:id', function(req, res, next){
   });
 });
 
-// router.post('/billings', function(req, res, next){
-//   let data = {};
-//   const paySystem = validator.checkPaySystem(req.body.paySystem);
-//   if (typeof(paySystem) == 'undefined') {
-//     res.status(400).send({status : 'Error', message : 'Bad request : PaySystem is undefined'});
-//     return;
-//   }
-//   if (!paySystem){
-//     res.status(400).send({status : 'Error', message : 'Bad request : Invalid PaySystem'});
-//     return;
-//   }
-//   data.paySystem = paySystem;
-//   const account = validator.checkAccount(req.body.account);
-//   if (typeof(account)  == 'undefined') {
-//     res.status(400).send({status : 'Error', message : 'Bad request : Account is undefined'});
-//     return;
-//   }
-//   if (!account){
-//     res.status(400).send({status : 'Error', message : 'Bad request : Invalid Account'});
-//     return;
-//   }
-//   data.account = account;
-//   const cost  = validator.checkCost(req.body.cost);
-//   console.log(cost);
-//   if (typeof(cost) == 'undefined'){
-//     res.status(400).send({status : 'Error', message : 'Bad request : Cost is undefined'});
-//     return;
-//   }
-//   if (!cost){
-//     res.status(400).send({status : 'Error', message : 'Bad request : Invalid cost'});
-//     return;
-//   }
-//   data.cost = cost;
-//   bus.createBilling(data, function(err, status, response){
-//     if (err)
-//       return next(err);
-//     else {
-//       res.status(status).send(response);
-//     }
-//   });
-// });
+/*
+router.post('/billings', function(req, res, next){
+  let data = {};
+  const paySystem = validator.checkPaySystem(req.body.paySystem);
+  if (typeof(paySystem) == 'undefined') {
+    res.status(400).send({status : 'Error', message : 'Bad request : PaySystem is undefined'});
+    return;
+  }
+  if (!paySystem){
+    res.status(400).send({status : 'Error', message : 'Bad request : Invalid PaySystem'});
+    return;
+  }
+  data.paySystem = paySystem;
+  const account = validator.checkAccount(req.body.account);
+  if (typeof(account)  == 'undefined') {
+    res.status(400).send({status : 'Error', message : 'Bad request : Account is undefined'});
+    return;
+  }
+  if (!account){
+    res.status(400).send({status : 'Error', message : 'Bad request : Invalid Account'});
+    return;
+  }
+  data.account = account;
+  const cost  = validator.checkCost(req.body.cost);
+  console.log(cost);
+  if (typeof(cost) == 'undefined'){
+    res.status(400).send({status : 'Error', message : 'Bad request : Cost is undefined'});
+    return;
+  }
+  if (!cost){
+    res.status(400).send({status : 'Error', message : 'Bad request : Invalid cost'});
+    return;
+  }
+  data.cost = cost;
+  bus.createBilling(data, function(err, status, response){
+    if (err)
+      return next(err);
+    else {
+      res.status(status).send(response);
+    }
+  });
+});
+*/
 
 router.get('/billings/:id', function(req, res, next){
   const id = validator.checkID(req.params.id);
@@ -419,4 +447,8 @@ router.get('/billings/:id', function(req, res, next){
       res.status(status).send(response);
     }
   });
+});
+
+router.post('/authorization', function(req, res, next){
+  
 });
