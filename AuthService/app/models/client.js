@@ -14,7 +14,7 @@ const ClientSchema = new Schema({
     appSecret    : {
       type      : String,
       required  : true
-    },
+    }
 });
 
 mongoose.model('Client', ClientSchema);
