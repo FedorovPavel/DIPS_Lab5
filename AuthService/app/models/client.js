@@ -7,15 +7,18 @@ const ClientSchema = new Schema({
       unique    : true,
       required  : true
     },
-    clientId        : {
+    appId        : {
       type      :String, 
-      required  : true,
       required  : true
     },
-    clientSecret    : {
+    appSecret    : {
       type      : String,
       required  : true
     },
 });
 
 mongoose.model('Client', ClientSchema);
+
+var model = mongoose.model('Client');
+
+module.exports.clientModel = model;
