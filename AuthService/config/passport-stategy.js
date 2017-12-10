@@ -1,45 +1,32 @@
 const   config          	= require('./config'),
         passport       		= require('passport'),
 				basicStrategy   	= require('passport-http').BasicStrategy,
+				localStrategy			= require('passport-local').Strategy,
 				bearerStrategy 		= require('passport-http-bearer').Strategy,
-        //passwordStrategy 	= require('passport-oauth2-client-password').Strategy,
+        passwordStrategy 	= require('passport-oauth2-client-password').Strategy,
         UserModel   			= require('./../app/models/users').userModel,
-        // ClientModel 			= require('./../app/models/client').clientModel,
+        ClientModel 			= require('./../app/models/client').clientModel,
         AccessToken  			= require('./../app/models/accesstoken').tokenModel,
         RefreshToken 			= require('./../app/models/refreshtoken').tokenModel;
 
-/* Вариант для appId и appSecret
-	passport.use(new basicStrategy(
-			function(appId, appSecret, done){
-					ClientModel.findOne({clientId : appId}, function(err, app_cli){
-							if (err)
-									return done(err);
-							if (!app_cli)
-									return done(null, false);
-							if (app_cli.clientSecret != appSecret)
-									return done(null, false);
-							return done(null, app_cli);
-					});
-			}
-	));
-	passport.use(new passwordStrategy(
-			function(clientId, clientSecret, done){
-					ClientModel.findOne({clientId: clientId}, function(err, client){
-							if (err) 
-									return done(err);
-							if (!client)
-									return done(null, false);
-							if (client.clientSecret != clientSecret)
-									return done(null, false);
-							return done(null, client);
-					});
-			}
-	));
-*/
-
-//  Вариант OAuth без appId и appSecret
-//  Стратегия авторизации по логину-паролю
+//  Стратегия для распознования appId и appSecret
 passport.use(new basicStrategy(
+	function(appId, appSecret, done){
+		console.log('Проверка сервиса запрашивающего авторизацию');
+		ClientModel.findOne({appId : appId}, function(err, app_cli){
+			if (err)
+				return done(err);
+			if (!app_cli)
+				return done(null, false);
+			if (app_cli.appSecret != appSecret)
+				return done(null, false);
+			return done(null, app_cli);
+		});
+	}
+));
+
+//  Стратегия авторизации по логину-паролю
+passport.use(new passwordStrategy(
 	function(userName, userPwd, done){
 		//  Поиск юзера по логину
 		console.log('Проверка пользователя по login|password');
@@ -59,7 +46,7 @@ passport.use(new basicStrategy(
 ));
 
 //  Стратегия для Bearer токена
-passport.use(new bearerStrategy(
+passport.use(new (
   function(accessToken, done){
 		//  Ищем токен
     AccessToken.findOne({token : accessToken},function(err, token){
