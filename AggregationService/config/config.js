@@ -6,7 +6,9 @@ var config = {
   development: {
     root: rootPath,
     app: {
-      name: 'aggregationservice'
+      name    : 'aggregationservice',
+      id      : 'aggregator',
+      secret  : 'aggregatorKey'
     },
     port: process.env.PORT || 3000,
   },
@@ -14,7 +16,9 @@ var config = {
   test: {
     root: rootPath,
     app: {
-      name: 'aggregationservice'
+      name: 'aggregationservice',
+      id      : 'aggregator',
+      secret  : 'aggregatorKey'
     },
     port: process.env.PORT || 3000,
   },
@@ -22,7 +26,9 @@ var config = {
   production: {
     root: rootPath,
     app: {
-      name: 'aggregationservice'
+      name: 'aggregationservice',
+      id      : 'aggregator',
+      secret  : 'aggregatorKey'
     },
     port: process.env.PORT || 3000,
   }
