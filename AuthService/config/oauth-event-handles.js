@@ -16,7 +16,6 @@ const   oauth2orize     = require('oauth2orize'),
         config          = require('./config'),
         mongoose        = require('mongoose'),
         UserModel       = require('./../app/models/users').userModel,
-        //ClientModel     = mongoose.model('Client'),
         AccessToken     = require('./../app/models/accesstoken').tokenModel,
         RefreshToken    = require('./../app/models/refreshtoken').tokenModel;
 
@@ -138,4 +137,11 @@ server.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken,
     });
 }));
 
-exports.token = [passport.authenticate('basic', {session : false}), server.token(), server.errorHandler()];
+exports.token = [
+    passport.authenticate(
+        ['basic','oauth2-client-password'],
+        {session : false}
+    ), 
+    server.token(), 
+    server.errorHandler()
+];
