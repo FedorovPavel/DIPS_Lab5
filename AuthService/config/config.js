@@ -10,7 +10,8 @@ const config = {
     },
     port: process.env.PORT || 3001,
     security : {
-      tokenLife : 1800
+      userTokenLife : 1800,
+      serviceTokenLife : 100
     },
     db: 'mongodb://localhost/authservice-development'
   },
