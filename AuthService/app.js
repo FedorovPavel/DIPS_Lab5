@@ -18,6 +18,7 @@ models.forEach(function (model) {
 const app = express();
 
 module.exports = require('./config/express')(app, config);
+const client = require('./config/client.js');
 
 app.listen(config.port, () => {
   console.log('Express server listening on port ' + config.port);
