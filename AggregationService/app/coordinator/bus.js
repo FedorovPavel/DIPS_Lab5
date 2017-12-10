@@ -1,7 +1,39 @@
 const   _CatalogHost    = 'http://localhost:3004',
         _OrderHost      = 'http://localhost:3002',
-        _BillingHost    = 'http://localhost:3003';
+        _BillingHost    = 'http://localhost:3003',
+        _AuthHost       = 'http://localhost:3001';
+
+const   config  = require('./../../config/config');
+
+let     token   = null;
+let     id      = config.app.id,
+        secret  = config.app.secret;
+
 module.exports = {
+    getToken : function(login, pwd, callback){
+        const url = _AuthHost + '/auth/token';
+        const options = createOptions(url, 'POST');
+        const data = {
+            grant_type  : 'password',
+            username    : login,
+            password    : pwd
+        };
+        createAndSendHttpPostRequest(options, data, function(err, status, response){
+            return responseHandlerObject(err, status, response, callback);
+        });
+        return;
+    },
+    getToken : function(ref_token, callback){
+        const url = _AuthHost + '/auth/token';
+        const options = createOptions(url, 'POST');
+        const data = {
+            grant_type  : 'refresh_token',
+            refresh_token : ref_token
+        };
+        return createAndSendHttpPostRequest(options, data, function(err, status, response){
+            return responseHandlerObject(err, status, response, callback);
+        });
+    },
     getCars: function (page, count, callback) {
         const url = _CatalogHost + '/catalog?page=' + page + '&count=' + count;
         const options = createOptions(url, 'GET');
@@ -170,6 +202,16 @@ function createOptions(uri, method) {
         method: method,
         uri: uri,
     };
+    if (token){
+        item.auth = {
+            bearer : token.accessToken
+        }
+    } else {
+        item.auth = {
+            user : id,
+            pass : secret
+        }
+    }
     return item;
 }
 
