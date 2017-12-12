@@ -52,7 +52,7 @@ router.get('/userId', function(req, res, next){
             return res.status(status).send(getResponseObject('Error', err));
           if (!user)
             return res.status(status).send(getResponseObject('Error', 'User is null'));
-          return res.status(200).send(user.id);
+          return res.status(200).send({id : user.id});
         });
       }
       return res.status(401).send(getResponseObject('Error', 'Header "user-authorization" is undefined'));
