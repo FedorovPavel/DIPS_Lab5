@@ -81,13 +81,13 @@ module.exports = {
 				if (err) {
 					return done(err);
 				}
-				return console.log('Удален refresh-токен для пользователя ' + user.name);
+				return console.log('Удален refresh-токен для пользователя ' + user.login);
 			});
 			//  Удаляем токен
 			AccessToken.remove({userId : user.userId}, function(err){
 				if (err)
 					return done(err);
-				return console.log('Удален access-токен для пользователя ' + user.name);
+				return console.log('Удален access-токен для пользователя ' + user.login);
 			});
 			//  создаем токен
 			let tokenValue = crypto.randomBytes(32).toString('base64');
