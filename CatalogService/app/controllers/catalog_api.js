@@ -1,7 +1,8 @@
 var express   = require('express'),
     router    = express.Router(),
     mongoose  = require('mongoose'),
-    catalog   = mongoose.model('Car');
+    catalog   = mongoose.model('Car'),
+    passport  = require('./../passport/my-passport');
 
 module.exports = function (app) {
   app.use('/catalog', router);
@@ -9,43 +10,49 @@ module.exports = function (app) {
 
 //  get cars
 router.get('/',function(req, res, next){
-  let page  = Number(req.query.page);
-  let count = Number(req.query.count); 
-  catalog.getCars(page, count, function(err ,result){
-    if (err)
-      res.status(400).send({status : 'Error', message : err});
-    else {
-      catalog.getCount(function(err, count_record){
-        if (err){
-          res.status(500).send({status : 'Error', message : 'undefined count elem'});
-        }
-        data = {
+  return passport.checkServiceAuthorization(req, res, function(scope){
+    let page  = Number(req.query.page);
+    let count = Number(req.query.count); 
+    return catalog.getCars(page, count, function(err ,result){
+      if (err)
+        return res.status(400).send({status : 'Error', message : err , service : scope});
+      return catalog.getCount(function(err, count_record){
+        if (err)
+          return res.status(500).send({status : 'Error', message : 'undefined count elem', service : scope});
+        const data = {
           content : result,
           info : {
             count   : count_record,
             pages   : Math.ceil(count_record / count) - 1,
             current : page,
             limit   : count
-          }
-        }
-        res.status(200).send(data);
+          },
+          service : scope
+        };
+        return res.status(200).send(data);
       });
-    }
+    });
   });
 });
 
 // get car
 router.get('/:id', function(req, res, next){
-  const id = req.params.id;
-  catalog.getCar(id, function(err, result){
-    if (err) {
-      if (err.kind == "ObjectID")
-        res.status(400).send({status:'Error', message : 'Bad request: Invalid ID'});
-      else 
-        res.status(404).send({status:'Error', message : 'Car not found'});
-    } else {
-      res.status(200).send(result);
-    }
+  return passport.checkServiceAuthorization(req, res, function(scope){
+    const id = req.params.id;
+    return catalog.getCar(id, function(err, result){
+      if (err) {
+        if (err.kind == "ObjectID")
+          return res.status(400).send({status:'Error', message : 'Bad request: Invalid ID', service: scope});
+        else 
+          return res.status(404).send({status:'Error', message : 'Car not found', service : scope});
+      } else {
+        const data = {
+          content : result,
+          service : scope
+        }
+        return res.status(200).send(data);
+      }
+    });
   });
 });
 
@@ -61,10 +68,6 @@ router.get('/:id', function(req, res, next){
 //     }
 //   });
 // });
-
-router.head('/live',function(req, res, next){
-  res.status(200).send(null);
-});
 
 /*
 router.get('/generate_random_cars', function (req, res, next) {
