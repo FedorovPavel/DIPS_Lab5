@@ -11,6 +11,7 @@
     "test:integration": "mocha --recursive test/integration"
   },
   "dependencies": {
+    "basic-auth": "^2.0.0",
     "body-parser": "^1.13.3",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
