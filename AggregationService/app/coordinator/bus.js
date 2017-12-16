@@ -51,7 +51,7 @@ module.exports = {
         }
         return main_function(info, callback);
     },
-    getUserId : function(info, callback){
+    getUserInfo : function(info, callback){
         let main_function = function(info, callback){
             const url = _AuthHost + '/auth/userId';
             const options = createOptions(url, 'GET', AuthToken, info.token);
@@ -355,8 +355,7 @@ function checkServicesInformationFromAuth(status, response, method, info, callba
         AuthToken = null;
         method(info, callback);
         return true;
-    } 
-    if (status == 200 && typeof(response.service) != 'undefined'){
+    } else if (typeof(response.service) != 'undefined'){
         console.log('Set new AuthToken Token');
         AuthToken = response.service;
         delete response.service;
@@ -371,8 +370,7 @@ function checkServicesInformationFromCatalog(status, response, method, info, cal
         CatalogToken = null;
         method(info, callback);
         return true;
-    } 
-    if (status == 200 && typeof(response.service) != 'undefined'){
+    } else if (typeof(response.service) != 'undefined'){
         console.log('Set new CatalogToken');
         CatalogToken = response.service;
         delete response.service;
@@ -387,8 +385,7 @@ function checkServicesInformationFromOrder(status, response, method, info, callb
         OrderToken = null;
         method(info, callback);
         return true;
-    } 
-    if (status == 200 && typeof(response.service) != 'undefined'){
+    } else if (typeof(response.service) != 'undefined'){
         console.log('Set new OrderToken');
         OrderToken = response.service;
         delete response.service;
@@ -404,23 +401,10 @@ function checkServicesInformationFromBilling(status, response, method, info, cal
         method(info, callback);
         return true;
     } 
-    if (status == 200 && typeof(response.service) != 'undefined'){
+    if (typeof(response.service) != 'undefined'){
         console.log('Set new BillingToken');
         BillingToken = response.service;
         delete response.service;
     }
     return false;
 }
-
-
-
-/* 
-    getCarsByIDs : function(ids, callback){
-        const url = _CatalogHost + '/catalog/ids?ids=' + ids;
-        const options = createOptions(url, "GET");
-        createAndSendGetHttpRequest(options, function(err, status, response){
-            return responseHandlerArrayObject(err, status, response, callback);
-        });
-        return;
-    },
-*/
