@@ -19,7 +19,7 @@ OrderSchema.virtual('date')
 OrderSchema.statics.getOrders = function(user_id, page = 0, count = 20, callback){
   page = Number(page);
   count = Number(count);
-  return this.find({'UserID' : user_id}, function(err, orders){
+  return this.find({UserID : user_id}, function(err, orders){
     if (err)
       return callback(err, null);
     else {
@@ -37,14 +37,13 @@ OrderSchema.statics.getOrders = function(user_id, page = 0, count = 20, callback
   }).skip(page*count).limit(count); 
 };
 
-OrderSchema.statics.getOrder = function(id, callback){
-  return this.findById(id, function(err, result){
+OrderSchema.statics.getOrder = function(uid, id, callback){
+  return this.findOne({_id : id, UserID : uid}, function(err, result){
     if (err)
       return callback(err, null);
     else {
       if (result) {
-        let order = getOrder(result);
-        return callback(null, order);
+        return callback(null, getOrder(result));
       } else {
         return callback(null, null);
       }
@@ -74,8 +73,8 @@ OrderSchema.statics.createOrder = function(objectInfo, callback){
   }
 };
 
-OrderSchema.statics.setWaitStatus = function(id, callback){
-  return this.findById(id, function(err, order){
+OrderSchema.statics.setWaitStatus = function(uid, id, callback){
+  return this.findOne({_id : id, UserID : uid}, function(err, order){
     if (err)
       return callback(err, null);
     else {
@@ -98,8 +97,8 @@ OrderSchema.statics.setWaitStatus = function(id, callback){
   });
 };
 
-OrderSchema.statics.setPaidStatus = function(id, billing_id, callback){
-  return this.findById(id, function(err, order){
+OrderSchema.statics.setPaidStatus = function(uid, id, bid, callback){
+  return this.find({_id : id, UserID : uid}, function(err, order){
     if (err)
       return callback(err, null);
     else {
@@ -123,8 +122,8 @@ OrderSchema.statics.setPaidStatus = function(id, billing_id, callback){
   });
 };
 
-OrderSchema.statics.setCompleteStatus = function(id, callback){
-  return this.findById(id, function(err, order){
+OrderSchema.statics.setCompleteStatus = function(uid, id, callback){
+  return this.find({_id : id, UserID : uid}, function(err, order){
     if (err)
       return callback(err, null);
     else {
@@ -148,8 +147,8 @@ OrderSchema.statics.setCompleteStatus = function(id, callback){
   });
 };
 
-OrderSchema.statics.getCount = function(callback){
-  return this.count({}, function(err, count){
+OrderSchema.statics.getCount = function(uid, callback){
+  return this.count({UserID : uid}, function(err, count){
     if (err)
       return callback(err, null);
     return callback(null, count);
