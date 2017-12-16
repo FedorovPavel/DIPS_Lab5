@@ -2,11 +2,14 @@ var path = require('path'),
     rootPath = path.normalize(__dirname + '/..');
     env = process.env.NODE_ENV || 'development';
 
+const tokenLife = 300;
+
 const config = {
   development: {
     root: rootPath,
     app: {
-      name: 'orderingservice'
+      name: 'orderingservice',
+      tokenLife: tokenLife 
     },
     port: process.env.PORT || 3002,
     db: 'mongodb://localhost/orderingservice-development'
@@ -15,7 +18,8 @@ const config = {
   test: {
     root: rootPath,
     app: {
-      name: 'orderingservice'
+      name: 'orderingservice',
+      tokenLife : tokenLife
     },
     port: process.env.PORT || 3002,
     db: 'mongodb://localhost/orderingservice-test'
@@ -24,7 +28,8 @@ const config = {
   production: {
     root: rootPath,
     app: {
-      name: 'orderingservice'
+      name: 'orderingservice',
+      tokenLife : tokenLife
     },
     port: process.env.PORT || 3002,
     db: 'mongodb://localhost/orderingservice-production'
