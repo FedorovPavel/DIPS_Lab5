@@ -118,7 +118,7 @@ router.get('/catalog/:id', function(req, res, next){
 
 //  Create Order
 router.post('/orders/', function(req, res, next){
-  return checkAuthorizeAndGetUserInfo(req, res, function(info){
+  return checkAuthAndGetUserInfo(req, res, function(info){
     let param = {};
     param.userId = info.id;
     param.carID = validator.checkID(req.body.carID);
@@ -327,6 +327,7 @@ router.put('/orders/paid/:id', function(req, res, next){
     return bus.getOrder(checkData, function(err, status, pre_order){
       if (err)
         return res.status(status).send(pre_order);
+      pre_order = pre_order.content;
       if (pre_order && pre_order.Status == 'WaitForBilling'){
         let transferData = {
           orderId: oid,
@@ -334,13 +335,15 @@ router.put('/orders/paid/:id', function(req, res, next){
           data : data
         };
         return bus.createBilling(transferData, function(err, status, response){
-          if (err)
+          if (err || status != 201)
             return res.status(status).send(response);
-          if (response){
+          if (response && status == 201){
+            response = response.content;
             const billing_id = response.id;
             transferData = {
               order_id : oid,
               userId : info.id,
+              billing_id : billing_id
             };
             return bus.orderPaid(transferData, function(err, status, order){
               if (err){
@@ -465,7 +468,7 @@ function checkAuthAndGetUserInfo(req, res, callback){
   } 
   if (!info.token || info.token.length == 0 || typeof(info.token) === 'undefined')
     return res.status(401).send({status : 'Non authorize', message : 'Invalid token'});
-  return bus.getUserId(info, function(err, status, response){
+  return bus.getUserInfo(info, function(err, status, response){
     if (err)
       return res.status(status).send(err);
     if (!response)

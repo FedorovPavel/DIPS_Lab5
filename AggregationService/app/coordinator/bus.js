@@ -158,7 +158,7 @@ module.exports = {
                 });
             });
         }
-        return main_function(order_id, billing_id, callback);
+        return main_function(data, callback);
     },
     orderConfirm: function (data, callback) {
         let main_function = function(data, callback){
@@ -177,7 +177,7 @@ module.exports = {
     },
     orderComplete: function (data, callback) {
         let main_function = function(data, callback){
-            const url = _OrderHost + '/orders/complete/' + data.order_id;
+            const url = _OrderHost + '/orders/complete/' + data.orderId;
             const options = createOptions(url, "PUT", OrderToken, null, data.userId);
             return createAndSendPutWithFormHttpRequest(options, null, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function(err, status, response){
@@ -206,7 +206,7 @@ module.exports = {
     //  Billing methods
     createBilling: function (data, callback) {
         let main_function = function(data, callback){
-            const url = _BillingHost + '/billings/' + data.orderId;
+            const url = _BillingHost + '/billings/';
             const options = createOptions(url, "POST", BillingToken, null, data.userId);
             let clone = data.data;
             return createAndSendHttpPostRequest(options, clone, function (err, status, response) {    
