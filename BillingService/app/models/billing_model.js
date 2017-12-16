@@ -25,6 +25,22 @@ BillingSchema.statics.getBillingRecord = function(id, callback){
   });
 }
 
+BillingSchema.statics.getBillingsRecordByIDs = function(ids, callback){
+  return this.find({'_id' : {$in : ids }}, function (err, billings) {
+    if (err)
+      return callback(err, null);
+    if (billings){
+      let result = [];
+      for (let I = 0; I < billings.length; I++){
+        result.push(getBillingRecordInfo(billings[I]));
+      }
+      return callback(null, result);
+    } else {
+      callback("Billings not found", null);
+    }
+  });
+}
+
 BillingSchema.statics.createBillingRecord = function(object, callback){
   let record = createBillingRecordInfo(object);
   return record.save(function(err, result){
