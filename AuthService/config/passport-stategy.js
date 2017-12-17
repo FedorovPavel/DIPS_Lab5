@@ -13,9 +13,9 @@ module.exports = {
 			if (err)
 				return done(err, 500);
 			if (!app_cli)
-				return done('Application with this appId and appSecret not found', 404, false);
+				return done('Application with this appId and appSecret not found', 401, false);
 			if (app_cli.appSecret != appSecret)
-				return done('Application with this appId and appSecret not found', 400, false);
+				return done('Application with this appId and appSecret not found', 401, false);
 			return done(null, null, app_cli);
 		});
 	},
@@ -25,7 +25,7 @@ module.exports = {
 			if (err)
 				return done(err, 500);
 			if (!token)
-				return done('Application with this access token not found', 404, false);
+				return done('Application with this access token not found', 401, false);
 			const timeLife = (Date.now() - token.created)/1000;
 			if (timeLife > config.security.serviceTokenLife){
 				token.remove(function(err){
@@ -182,7 +182,7 @@ module.exports = {
 					//  Считать обновление refresh токена OAuth успешным, вернуть 
 					let scope = {
 						access_token	: tokenValue,
-						refresh_token	: refreshToken,
+						refresh_token	: refreshTokenValue,
 						expires_in		: config.security.userTokenLife
 					}
             	    return done(null, null, scope);
@@ -199,7 +199,7 @@ module.exports = {
 				return done(err, 500);
 			//  Если токен не найден вернуть провал верификации
       		if (!token)
-				return done('Access token not found', 404, false);
+				return done('Access token not found', 401, false);
 			//  Расчет времени жизни
 			const timeLife = Math.round((Date.now() - token.created)/1000); // В секундах
       		if(timeLife > config.security.tokenLife){
@@ -208,7 +208,7 @@ module.exports = {
           			if (err) return done(err, 500);
 				});
 				//  Сообщить что верификация провалена, токен стух
-        		return done('Token expired', 500);
+        		return done('Token expired', 401);
 			}
 			//  Поиск владельца токена
       		return UserModel.findById(token.userId, function(err, user){	
@@ -217,7 +217,7 @@ module.exports = {
 					return done(err, 500);
 				//  Если владелец не найден
         		if (!user)
-					return done('Unkown user', 500);
+					return done('Unkown user', 401);
         		return done(null, null, user);
       		});
     	});	

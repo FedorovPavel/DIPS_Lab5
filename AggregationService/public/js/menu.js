@@ -14,6 +14,9 @@ class menu {
         this.bindHandleToHeader();
         this.recordCounter();
         this.changePager();
+        this.token = null;
+        this.refreshToken = null;
+        this.tokenTimer = null;
     };
     //  Error template
 
@@ -140,6 +143,11 @@ class menu {
         const menuPills = $('ul#nav-pills');    
         const cars      = menuPills.find('li#automobile-pill');
         const orders    = menuPills.find('li#orders-pill');
+        const auth      = $('button#auth_submit').click(function(){
+            const login = $('input#login').val();
+            const pwd = $('input#pwd').val();
+            self.authUser(login, pwd);
+        });
         $(cars).click(function(){
             $(menuPills).find('li').removeClass('active');
             $(this).addClass('active');
@@ -280,19 +288,13 @@ class menu {
         //  Определение формы
         let form = $('form#draft_order');
         //  Формирование даты
-        const data = {
-            userID      : self.checkID('59f634f54929021fa8251644'),
+        let data = {
             carID       : self.checkID($(panel).attr('carId')),
             startDate   : self.ConvertStringToDate($(form).find('input#startDate').val()),
             endDate     : self.ConvertStringToDate($(form).find('input#endDate').val())
         };
         //  Поле ошибок заполнения
         const err_line = $(panel).find('span.dataErr');
-        //  Проверка ID
-        if (!data.userID){
-            $(err_line).text('Невереный UserID');
-            return;
-        }
         //  Проверка ID автомобиля
         if (!data.carID){
             $(err_line).text('Неверный CarID');
@@ -313,14 +315,28 @@ class menu {
         //  Cсылка на 
         const url = '/aggregator/orders/';
         //  Отправка post запроса
-        $.post(url, data)
-            .done(function(res){
+        let req = new XMLHttpRequest();
+        req.open('POST', url, true);
+        req.setRequestHeader("Authorization", "Bearer " + self.token);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.onreadystatechange = function(){
+            if (req.readyState != 4)
+                return;
+            if (req.status == 201){
+                let res = JSON.parse(req.response);
+                self.experidToken();    
                 self.confirm_after_draft(panel, res);
-            })
-            .fail(function(res){
-                self.rendErrorTemplate(res.responseText, res.status);
+            } else if (req.status == 401){
+                self.refresh();
+                self.sendRecordToDraft(panel);
+                return;
+            } else {
+                self.rendErrorTemplate(req.responseText, req.status);
                 $(panel).remove();
-            });
+            }
+        };
+        data = JSON.stringify(data);
+        req.send(data);
     }
 
     //  Отправка запроса на подтверждения
@@ -331,12 +347,19 @@ class menu {
             const url = '/aggregator/orders/confirm/' + id;
             let req = new XMLHttpRequest();
             req.open('PUT', url, true);
+            req.setRequestHeader("Authorization", "Bearer " + self.token);
             req.onreadystatechange = function(){
                 if (req.readyState != 4)
                     return;
+                self.draftExecution = false;
                 if (req.status == 200){
                     $(panel).remove();
-                    self.draftExecution = false;
+                    self.experidToken();    
+                    return;
+                } else if (req.status == 401){
+                    self.refresh();
+                    self.sendConfirmOrder(panel);
+                    return;
                 } else {
                     self.rendErrorTemplate(res.responseText, res.status);
                     self.draftExecution = false;
@@ -375,6 +398,65 @@ class menu {
             this.fillDraftPanel(panel, car);
         }
     };
+
+    authUser(login, pwd){
+        let req = new XMLHttpRequest();
+        let self = this;
+        const url = '/aggregator/auth';
+        req.open('POST', url, true);
+        req.setRequestHeader("Authorization", "Basic " + btoa(login +':' + pwd));
+        req.onreadystatechange = function(){
+            if (req.readyState != 4)
+                return;
+            if (req.status != 200){
+                self.rendErrorTemplate(req.response, req.status);
+                $('div#authForm').removeClass('hidden');
+                return;
+            } else if (req.status == 200){
+                let res = JSON.parse(req.response);
+                res = res.content;
+                self.token = res.access_token;
+                self.refreshToken = res.refresh_token;
+                self.experidToken();
+                $('div#authForm').addClass('hidden');
+            }
+        }
+        req.send();
+    }
+
+    refresh(){
+        let req = new XMLHttpRequest();
+        let self = this;
+        const url = '/aggregator/auth';
+        req.open('POST', url, false);
+        req.setRequestHeader("Authorization", "Bearer " + self.refreshToken);
+        req.send(null);
+        if (req.readyState != 4)
+            return;
+        if (req.status != 200){
+            self.rendErrorTemplate(req.response, req.status);
+            $('div#authForm').removeClass('hidden');
+            self.experidToken();
+            return;
+        } else if (req.status == 200){
+            let res = JSON.parse(req.response);
+            res = res.content;
+            self.token = res.access_token;
+            self.refreshToken = res.refresh_token;
+            return;
+        }
+        // }
+        // req.send();
+        
+    }
+
+    experidToken(){
+        let self = this;
+        clearTimeout(self.tokenTimer);
+        self.tokenTimer = setTimeout(function(){
+            self.token = null;
+        }, 10000);
+    }
 };
 
 $(document).ready(function(){

@@ -24,7 +24,7 @@ var model = mongoose.model('App');
 // init 
 
 function init(){
-  return model.find({name : 'aggregator'}, function(err, app){
+  return model.findOne({name : 'aggregator'}, function(err, app){
     if (err)
       console.log('Problem with MongoDB');
     if (!app){

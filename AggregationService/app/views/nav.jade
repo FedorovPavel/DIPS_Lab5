@@ -5,9 +5,14 @@ div.navbar-wrapper
                 img(src='/img/logo.png', alt='logo')
             div.col-xs-2.name
                 p.text-center.nav-title FrontEnd
-            div.col-xs-8
+            div.col-xs-6
                 ul#nav-pills.nav.nav-pills
                     li#automobile-pill.active 
                         a Автомобили
                     li#orders-pill 
                         a Заказы
+            div.col-xs-2
+                div#authForm
+                    input#login(name='login', required)
+                    input#pwd(name='pwd', type='password', required)
+                    button#auth_submit Зайти

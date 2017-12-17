@@ -98,14 +98,14 @@ OrderSchema.statics.setWaitStatus = function(uid, id, callback){
 };
 
 OrderSchema.statics.setPaidStatus = function(uid, id, bid, callback){
-  return this.find({_id : id, UserID : uid}, function(err, order){
+  return this.findOne({_id : id, UserID : uid}, function(err, order){
     if (err)
       return callback(err, null);
     else {
       if (order){
         if (order.Status == 'WaitForBilling'){
           order.Status = 'Paid';
-          order.BillingID = billing_id;
+          order.BillingID = bid;
           return order.save(function(err, res){
             if (err)
               return callback(err, null);
@@ -123,7 +123,7 @@ OrderSchema.statics.setPaidStatus = function(uid, id, bid, callback){
 };
 
 OrderSchema.statics.setCompleteStatus = function(uid, id, callback){
-  return this.find({_id : id, UserID : uid}, function(err, order){
+  return this.findOne({_id : id, UserID : uid}, function(err, order){
     if (err)
       return callback(err, null);
     else {

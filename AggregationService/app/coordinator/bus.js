@@ -89,8 +89,11 @@ module.exports = {
             return createAndSendGetHttpRequest(options, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function (err, status, response) {
                     const repeat = checkServicesInformationFromCatalog(status, response, main_function, data, callback);
-                    if (!repeat)
+                    if (!repeat){
+                        if (status == 200)
+                            response = response.content;
                         return callback(err, status, response);
+                    }
                     return;
                 }); 
             });
@@ -107,8 +110,9 @@ module.exports = {
             return createAndSendHttpPostRequest(options, clone, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function (err, status, response){
                     const repeat = checkServicesInformationFromOrder(status, response, main_function, data, callback);
-                    if (!repeat)
+                    if (!repeat){
                         return callback(err, status, response);
+                    }
                     return;
                 });               
             });
@@ -122,8 +126,11 @@ module.exports = {
             return createAndSendGetHttpRequest(options, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromOrder(status, response, main_function, data, callback);
-                    if (!repeat)
+                    if (!repeat){
+                        if (status == 200)
+                            response = response.content;
                         return callback(err, status, response);
+                    }
                     return;
                 });
             });
@@ -152,8 +159,9 @@ module.exports = {
             return createAndSendPutWithFormHttpRequest(options, null, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromOrder(status, response, main_function, data, callback);
-                    if (!repeat)
+                    if (!repeat){
                         return callback(err, status, response);
+                    }
                     return;
                 });
             });
@@ -168,6 +176,8 @@ module.exports = {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromOrder(status, response, main_function, data, callback);
                     if (!repeat)
+                        if (status == 200)
+                            response = response.content;
                         return callback(err, status, response);
                     return;
                 });
@@ -183,6 +193,8 @@ module.exports = {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromOrder(status, response, main_function, data, callback);
                     if (!repeat)
+                        if (status == 202)
+                            response = response.content;
                         return callback(err, status, response);
                     return;
                 });
@@ -213,6 +225,8 @@ module.exports = {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromBilling(status, response, main_function, data, callback);
                     if (!repeat)
+                        if (status == 201)
+                            response = response.content;
                         return callback(err, status, response);
                     return;
                 });
@@ -222,12 +236,14 @@ module.exports = {
     },
     getBilling: function (data, callback) {
         let main_function = function(data, callback){
-            const url = _BillingHost + '/billings/' + data.billingId;
+            const url = _BillingHost + '/billings/' + data.billing_id;
             const options = createOptions(url, "GET", BillingToken, null, data.userId);
             return createAndSendGetHttpRequest(options, function (err, status, response) {
                 return responseHandlerObject(err, status, response, function(err, status, response){
                     const repeat = checkServicesInformationFromBilling(status, response, main_function, data, callback);
                     if (!repeat)
+                        if (status == 200)
+                            response = response.content;
                         return callback(err, status, response);
                     return;
                 });

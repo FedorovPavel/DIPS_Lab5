@@ -71,6 +71,9 @@ setInterval(function(){
 
 //  Auth
 router.post('/auth', function(req, res, next){
+  let getToken = function getBearerToken(req){
+    return req.headers.authorization.split(' ')[1];
+  }
   if (req.headers.authorization.indexOf('Basic') === 0){
     let user = auth(req);
     const info = {
@@ -82,7 +85,7 @@ router.post('/auth', function(req, res, next){
     });
   } else if (req.headers.authorization.indexOf('Bearer') === 0) {
     const info = {
-      ref_token : getBearerToken(req)
+      ref_token : getToken(req)
     };
     return bus.getTokenByToken(info, function(err, status, responseText){
       res.status(status).send(responseText);
@@ -230,10 +233,8 @@ router.get('/orders', function(req, res, next){
           for (let I = 0; I < orders.content.length; I++){
             const car_id = orders.content[I].CarID;
             if (typeof(car_id) != 'undefined'){
-              const carData = {
-                id : car_id
-              }
-              return bus.getCar(carData, function(err, status, car){
+              const carData = { id : car_id };
+              bus.getCar(carData, function(err, status, car){
                 delete orders.content[I].CarID;
                 if (err){
                   orders.content[I].Car = 'Неизвестно';
@@ -248,9 +249,9 @@ router.get('/orders', function(req, res, next){
                   const billing_id = orders.content[I].BillingID;
                   const billingData = {
                     billing_id : billing_id,
-                    userId : id
+                    userId : info.id
                   };
-                  return bus.getBilling(billingData, function(err, status, billing){
+                  bus.getBilling(billingData, function(err, status, billing){
                     delete orders.content[I].BillingID;
                     if (err){
                       orders.content[I].Billing = 'Неизвестно';
@@ -327,7 +328,6 @@ router.put('/orders/paid/:id', function(req, res, next){
     return bus.getOrder(checkData, function(err, status, pre_order){
       if (err)
         return res.status(status).send(pre_order);
-      pre_order = pre_order.content;
       if (pre_order && pre_order.Status == 'WaitForBilling'){
         let transferData = {
           orderId: oid,
@@ -338,7 +338,6 @@ router.put('/orders/paid/:id', function(req, res, next){
           if (err || status != 201)
             return res.status(status).send(response);
           if (response && status == 201){
-            response = response.content;
             const billing_id = response.id;
             transferData = {
               order_id : oid,
@@ -473,6 +472,8 @@ function checkAuthAndGetUserInfo(req, res, callback){
       return res.status(status).send(err);
     if (!response)
       return res.status(status).send('User not found');
+    if (status == 401)
+      return res.status(status).send(response);
     return callback(response)
   });
 }

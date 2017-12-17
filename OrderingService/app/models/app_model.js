@@ -24,10 +24,10 @@ var model = mongoose.model('App');
 // init 
 
 function init(){
-  return model.find({name : 'aggregator'}, function(err, app){
+  return model.findOne({name : 'aggregator'}, function(err, app){
     if (err)
       console.log('Problem with MongoDB');
-    //if (!app){
+    if (!app){
       let agg = new model({
         name : 'aggregator',
         appId : 'aggregator',
@@ -39,7 +39,7 @@ function init(){
         console.log('Create record for aggregator');
         return;
       });
-    //}
+    }
     console.log('Aggregator in DB');
     return;
   });

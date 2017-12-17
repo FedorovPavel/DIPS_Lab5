@@ -45,11 +45,18 @@ class order{
             let req = new XMLHttpRequest();
             const url = '/aggregator/orders/complete/' + id;
             req.open('PUT', url, true);
+            req.setRequestHeader("Authorization", "Bearer " + self.menu.token);
             req.onreadystatechange = function(){
                 if (req.readyState != 4)
                     return;
+                if (req.stauts == 401){
+                    self.menu.refresh();
+                    self.handleToCompleted(id, sender);
+                    return;
+                }
                 if (req.status == 202){
                     const list = self.menu.getList();
+                    self.menu.experidToken();    
                     const record = $(list).find('div').filter(function(){
                         if ($(this).attr('id') == id)
                             return true;
@@ -74,10 +81,17 @@ class order{
         const url = '/aggregator/orders/paid/' + id;
         req.open('PUT', url, true);
         req.setRequestHeader('Content-type','application/json; charset=utf-8');
+        req.setRequestHeader("Authorization", "Bearer " + self.menu.token);
         req.onreadystatechange = function(){
             if (req.readyState != 4)
                 return;
+            if (req.status == 401){
+                self.menu.refresh();
+                self.sendPaidInfo(id, data, sender);
+                return;
+            }
             if (req.status == 200){
+                self.menu.experidToken();    
                 $(sender).text('Завершить');
                 const list = self.menu.getList();
                 const record = $(list).find('div').filter(function(){
@@ -126,10 +140,17 @@ class order{
             let req = new XMLHttpRequest();
             const url = '/aggregator/orders/confirm/' + id;
             req.open('PUT', url, true);
+            req.setRequestHeader("Authorization", "Bearer " + self.menu.token);
             req.onreadystatechange = function(){
                 if (req.readyState != 4)
                     return;
+                if (req.status == 401){
+                    self.menu.refresh();
+                    self.handleToConfirm(id, sender);
+                    return;
+                }
                 if (req.status == 200){
+                    self.menu.experidToken();    
                     $(sender).text('Оплатить');
                     const list = self.menu.getList();
                     const record = $(list).find('div').filter(function(){
@@ -152,16 +173,31 @@ class order{
     getOrders(page, count, bind) {
         let self = bind;
         const url = '/aggregator/orders?page=' + page + '&count=' + count;
-        $.get(url)
-            .done(function(res){
+        let req = new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.setRequestHeader("Authorization", "Bearer " + self.menu.token);
+        req.onreadystatechange = function(){
+            if (req.readyState != 4)
+                return;
+            if (req.status == 401){
+                self.menu.refresh();
+                self.getOrders(page, count, bind);
+                return;
+            } else if (req.status == 200){
                 self.menu.clearList();
-                self.fillListWithOrder(res.content);
-                self.menu.pagination(res.info.current, res.info.pages);
-            })
-            .fail(function(res){
-                self.menu.rendErrorTemplateToList(res.responseText, res.status);
+                self.menu.experidToken();    
+                let res = JSON.parse(req.response);
+                if (res){
+                    self.fillListWithOrder(res.content);
+                    self.menu.pagination(res.info.current, res.info.pages);
+                }
+            } else {
+                self.menu.rendErrorTemplateToList(req.responseText, req.status);
                 self.menu.pagination(0,0);
-            });
+            }
+
+        }
+        req.send();
     }
 
     fillListWithOrder(list){
