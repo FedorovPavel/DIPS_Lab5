@@ -50,8 +50,15 @@ class order{
                 if (req.readyState != 4)
                     return;
                 if (req.stauts == 401){
-                    self.menu.refresh();
-                    self.handleToCompleted(id, sender);
+                    if (self.menu.refreshToken != null){
+                        self.menu.refresh();
+                        setTimeout(function(){
+                            self.handleToCompleted(id, sender);
+                        }, 1000);
+                    } else {
+                        $('div#authForm').removeClass('hidden');
+                        self.menu.rendErrorTemplate(req.response.message, req.status);
+                    }
                     return;
                 }
                 if (req.status == 202){
@@ -64,7 +71,7 @@ class order{
                     $(record).find('span.status').text('Completed');
                     $(sender).remove();
                 } else {
-                    self.menu.rendErrorTemplate(req.responseText, req.status);
+                    self.menu.rendErrorTemplate(req.response.message, req.status);
                 }
             }
             req.send();
@@ -86,8 +93,15 @@ class order{
             if (req.readyState != 4)
                 return;
             if (req.status == 401){
-                self.menu.refresh();
-                self.sendPaidInfo(id, data, sender);
+                if (self.menu.refreshToken != null){
+                    self.menu.refresh();
+                    setTimeout(function(){
+                        self.sendPaidInfo(id, data, sender);
+                    }, 1000);
+                } else {
+                    $('div#authForm').removeClass('hidden');
+                    self.menu.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                }
                 return;
             }
             if (req.status == 200){
@@ -106,7 +120,7 @@ class order{
                 $('body').find('#paid_panel').remove();
                 self.paidOperation = false;
             } else {
-                self.menu.rendErrorTemplate(req.responseText, req.status);
+                self.menu.rendErrorTemplate(JSON.parse(req.response).message, req.status);
             }
         }
         req.send(data);
@@ -145,8 +159,15 @@ class order{
                 if (req.readyState != 4)
                     return;
                 if (req.status == 401){
-                    self.menu.refresh();
-                    self.handleToConfirm(id, sender);
+                    if (self.menu.refreshToken != null){
+                        self.menu.refresh();
+                        setTimeout(function(){
+                            self.handleToConfirm(id, sender);
+                        },1000);
+                    } else {
+                        $('div#authForm').removeClass('hidden');
+                        self.menu.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                    }
                     return;
                 }
                 if (req.status == 200){
@@ -161,7 +182,7 @@ class order{
                     $(sender).unbind('click');
                     $(sender).click(function(sender){self.handleToPaid(id, this);});
                 } else {
-                    self.menu.rendErrorTemplate(req.responseText, req.status);
+                    self.menu.rendErrorTemplate(JSON.parse(req.response).message, req.status);
                 }
             }
             req.send();
@@ -180,8 +201,15 @@ class order{
             if (req.readyState != 4)
                 return;
             if (req.status == 401){
-                self.menu.refresh();
-                self.getOrders(page, count, bind);
+                if (self.menu.refreshToken){
+                    self.menu.refresh();
+                    setTimeout(function(){
+                        self.getOrders(page, count, bind);
+                    },1000);
+                } else {
+                    $('div#authForm').removeClass('hidden');
+                    self.menu.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                }
                 return;
             } else if (req.status == 200){
                 self.menu.clearList();
@@ -192,7 +220,7 @@ class order{
                     self.menu.pagination(res.info.current, res.info.pages);
                 }
             } else {
-                self.menu.rendErrorTemplateToList(req.responseText, req.status);
+                self.menu.rendErrorTemplateToList(JSON.parse(req.response).message, req.status);
                 self.menu.pagination(0,0);
             }
 
