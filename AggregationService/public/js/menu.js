@@ -324,14 +324,21 @@ class menu {
                 return;
             if (req.status == 201){
                 let res = JSON.parse(req.response);
-                self.experidToken();    
+                self.experidToken();                
                 self.confirm_after_draft(panel, res);
             } else if (req.status == 401){
-                self.refresh();
-                self.sendRecordToDraft(panel);
+                if (self.refreshToken != null){
+                    self.refresh();
+                    setTimeout(function(){
+                        self.sendRecordToDraft(panel);
+                    }, 100);
+                } else {
+                    $('div#authForm').removeClass('hidden');
+                    self.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                }
                 return;
             } else {
-                self.rendErrorTemplate(req.responseText, req.status);
+                self.rendErrorTemplate(JSON.parse(req.response).message, req.status);
                 $(panel).remove();
             }
         };
@@ -357,11 +364,19 @@ class menu {
                     self.experidToken();    
                     return;
                 } else if (req.status == 401){
-                    self.refresh();
-                    self.sendConfirmOrder(panel);
+                    if (self.refreshToken != null){
+                        self.refresh();
+                        setTimeout(function(){
+                            self.sendConfirmOrder(panel);
+                        }, 100);
+                        
+                    } else {
+                        $('div#authForm').removeClass('hidden');
+                        self.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                    }
                     return;
                 } else {
-                    self.rendErrorTemplate(res.responseText, res.status);
+                    self.rendErrorTemplate(JSON.parse(req.response).message, res.status);
                     self.draftExecution = false;
                     $(panel).remove();
                 }
@@ -427,23 +442,23 @@ class menu {
     refresh(){
         let req = new XMLHttpRequest();
         let self = this;
-        const url = '/aggregator/auth';
-        req.open('POST', url, false);
-        req.setRequestHeader("Authorization", "Bearer " + self.refreshToken);
-        req.send(null);
-        if (req.readyState != 4)
-            return;
-        if (req.status != 200){
-            self.rendErrorTemplate(req.response, req.status);
-            $('div#authForm').removeClass('hidden');
-            self.experidToken();
-            return;
-        } else if (req.status == 200){
-            let res = JSON.parse(req.response);
-            res = res.content;
-            self.token = res.access_token;
-            self.refreshToken = res.refresh_token;
-            return;
+        if (self.refreshToken != null){
+            const url = '/aggregator/auth';
+            req.open('POST', url, false);
+            req.setRequestHeader("Authorization", "Bearer " + self.refreshToken);
+            req.send(null);
+            if (req.status != 200){
+                self.rendErrorTemplate(JSON.parse(req.response).message, req.status);
+                $('div#authForm').removeClass('hidden');
+                self.experidToken();
+                return;
+            } else if (req.status == 200){
+                let res = JSON.parse(req.response);
+                res = res.content;
+                self.token = res.access_token;
+                self.refreshToken = res.refresh_token;
+                return;
+            }
         }
         // }
         // req.send();
