@@ -417,7 +417,7 @@ function checkServicesInformationFromBilling(status, response, method, info, cal
         method(info, callback);
         return true;
     } 
-    if (typeof(response.service) != 'undefined'){
+    if (response && typeof(response.service) != 'undefined'){
         console.log('Set new BillingToken');
         BillingToken = response.service;
         delete response.service;
